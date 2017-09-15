@@ -97,7 +97,7 @@ def update_image(image_path):
 	like_button.configure(image=img)
 	like_button.image = img
 
-	img = ImageTk.PhotoImage(Image.open("/usr/src/app/icons/icons/reload_off.png")) # new
+	img = ImageTk.PhotoImage(Image.open("/usr/src/app/icons/reload_off.png")) # new
 	reload_button.configure(image=img)
 	reload_button.image = img
 
