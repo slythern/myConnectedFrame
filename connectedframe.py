@@ -11,9 +11,9 @@ carousel_interval = int(getenv("CAROUSEL_INTERVAL_SECONDS")) * 1000
 frame_owner = getenv("FRAME_OWNER")
 ifttt_key = getenv("IFTTT_KEY")
 
-command = "crontab " + getenv("TIME_ZONE")
+command = "sudo crontab " + getenv("TIME_ZONE")
 print(command)
-# system(command)
+system(command)
 
 base_path = "/usr/src/app/images/"
 carrousel_status = True
