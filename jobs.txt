@@ -1,15 +1,15 @@
-# Turn off display every evening 
-# -4 EDT     0 2 * * * echo 1 > /sys/class/backlight/rpi_backlight/bl_power
-# -5 EST/CDT 
-0 3 * * * echo 1 > /sys/class/backlight/rpi_backlight/bl_power
+# Turn off display every evening @ 10PM 
+# -4 EDT     
+0 2 * * * echo 1 > /sys/class/backlight/rpi_backlight/bl_power
+# -5 EST/CDT 0 3 * * * echo 1 > /sys/class/backlight/rpi_backlight/bl_power
 # -6 CST/MDT 0 4 * * * echo 1 > /sys/class/backlight/rpi_backlight/bl_power
 # -7 MST/PDT 0 5 * * * echo 1 > /sys/class/backlight/rpi_backlight/bl_power
 # -8 PST     0 6 * * * echo 1 > /sys/class/backlight/rpi_backlight/bl_power
 
-# Turn on display every morning 
-# -4 EDT     0 12 * * * echo 0 > /sys/class/backlight/rpi_backlight/bl_power
-# -5 EST/CDT 
-0 13 * * * echo 0 > /sys/class/backlight/rpi_backlight/bl_power
+# Turn on display every morning @ 8AM 
+# -4 EDT     
+0 12 * * * echo 0 > /sys/class/backlight/rpi_backlight/bl_power
+# -5 EST/CDT 0 13 * * * echo 0 > /sys/class/backlight/rpi_backlight/bl_power
 # -6 CST/MDT 0 14 * * * echo 0 > /sys/class/backlight/rpi_backlight/bl_power
 # -7 MST/PDT 0 15 * * * echo 0 > /sys/class/backlight/rpi_backlight/bl_power
 # -8 PST     0 16 * * * echo 0 > /sys/class/backlight/rpi_backlight/bl_power
