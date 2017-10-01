@@ -1,4 +1,4 @@
-# Eastern Daylight Time
+# Eastern Daylight Time -4
 # Turn off display every evening 
 0 2 * * * echo 1 > /sys/class/backlight/rpi_backlight/bl_power
 
