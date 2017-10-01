@@ -1,4 +1,4 @@
-# Mountain Daylight Time
+# Mountain Daylight Time -6
 # Turn off display every evening 
 0 4 * * * echo 1 > /sys/class/backlight/rpi_backlight/bl_power
 
