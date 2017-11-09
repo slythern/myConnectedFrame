@@ -82,7 +82,7 @@ RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf
 COPY . ./
 
 # Install cronjobs to turn display on and off
-RUN crontab jobs.txt
+#RUN crontab jobs.txt
 
 # Enable systemd init system in container
 #ENV INITSYSTEM on
