@@ -14,6 +14,7 @@ carousel_interval = int(getenv("CAROUSEL_INTERVAL_SECONDS")) * 1000
 frame_owner = getenv("FRAME_OWNER")
 ifttt_key = getenv("IFTTT_KEY")
 
+dropbox_link1 = getenv("DROPBOX_LINK1")
 dropbox_link2 = getenv("DROPBOX_LINK2")
 dropbox_link3 = getenv("DROPBOX_LINK3")
 dropbox_link4 = getenv("DROPBOX_LINK4")
@@ -26,6 +27,7 @@ carrousel_status = True
 image_index = 0
 image_list = []
 initial_init = True
+last_command = "none"
 
 def download_images(url,scope):
 	archive = base_path + "temp.zip"
@@ -35,11 +37,11 @@ def download_images(url,scope):
 	extract = "unzip -j -n " + archive + " *.jpg -d " + base_path # added *.jpg to get only images, added -j to not make directories -n to skip existing files
 	
 	system(remove)
-	print("download")
+	print("download",scope)
 	system(download)
 	print("extract")
 	system(extract)
-	print("download_images is done")
+	print("download_images done")
 	
 	
 def resize_images():
@@ -74,8 +76,8 @@ def previous_image():
 def next_image():
 	global image_index
 	
-	if image_index < 1:
-		set_backlight()
+#	if image_index < 1:
+	set_backlight()
 	
 	image_index = image_index + 1
 	
@@ -124,6 +126,8 @@ def initialize():
 	carrousel_status = False
 	
 	download_images(dropbox_link,"*")
+	if( len(dropbox_link1) > 4 ):
+		download_images(dropbox_link1,"temp.zip")
 	if( len(dropbox_link2) > 4 ):
 		download_images(dropbox_link2,"temp.zip")
 	if( len(dropbox_link3) > 4 ):
@@ -165,24 +169,29 @@ def force_reload():
 	root.after(100, initialize)
 	
 def set_backlight():
-	print("set_backlight()")
+	global last_command, turn_backlight_on, turn_backlight_off
+#	print("set_backlight()")
 	
 	local_time=localtime()
-	d = datetime(local_time.tm_year,local_time.tm_mon,local_time.tm_mday,local_time.tm_hour,local_time.tm_min,local_time.tm_sec)
+	time_now = datetime(local_time.tm_year,local_time.tm_mon,local_time.tm_mday,local_time.tm_hour,local_time.tm_min,local_time.tm_sec)
 	time_on = datetime(local_time.tm_year,local_time.tm_mon,local_time.tm_mday,turn_backlight_on.tm_hour,turn_backlight_on.tm_min,local_time.tm_sec)
 	time_off = datetime(local_time.tm_year,local_time.tm_mon,local_time.tm_mday,turn_backlight_off.tm_hour,turn_backlight_off.tm_min,local_time.tm_sec)
-	
-	command = "echo 0 > /sys/class/backlight/rpi_backlight/bl_power"
-	
-	if d > time_off :
+		
+	if time_on < time_now < time_off :
+		command = "echo 0 > /sys/class/backlight/rpi_backlight/bl_power"
+	else:
 		command = "echo 1 > /sys/class/backlight/rpi_backlight/bl_power"
 	
-	if d < time_on :
-		command = "echo 1 > /sys/class/backlight/rpi_backlight/bl_power"
+#	if time_now < time_on :
+#		command = "echo 1 > /sys/class/backlight/rpi_backlight/bl_power"
 	
-	print(command)
-	system(command)
-	
+	if command != last_command :
+		system(command)
+		last_command = command
+		print(time_on)
+		print(time_now)
+		print(time_off)
+		print(command)
 	
 root = Tk()
 root.title('Connected Frame')
